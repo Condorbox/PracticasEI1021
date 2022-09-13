@@ -228,8 +228,8 @@ public class GestorViajes {
 	public JSONObject ofertaViaje(String codcli, String origen, String destino, String fecha, long precio, long numplazas) {
 		// POR IMPLEMENTAR
 		Viaje nuevoViaje = new Viaje(codcli, origen, destino, fecha, precio, numplazas);
-		mapa.put(codcli, nuevoViaje);
-		return nuevoViaje.toJSON(); // TODO REVISAR si codcli es el código del viaje
+		mapa.put(nuevoViaje.getCodviaje(), nuevoViaje);
+		return nuevoViaje.toJSON();
 	}
 
 	/**
