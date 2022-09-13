@@ -54,8 +54,18 @@ public class Viaje implements Serializable {
 	 *
 	 * @param jsonViaje
 	 */
-	public Viaje(JSONObject jsonViaje) {
+	public Viaje(JSONObject jsonViaje) { //REVISAR
 		super();
+		codprop = (String) jsonViaje.get("codprop");
+		origen = (String) jsonViaje.get("origen");
+		destino = (String) jsonViaje.get("destino");
+		fecha = (String) jsonViaje.get("fecha");
+		precio = (long)(jsonViaje.get("precio"));
+		numplazas = (long)(jsonViaje.get("numplazas"));
+
+		pasajeros = new Vector<String>();
+		codviaje = this.construyeCodviaje();
+
 		// POR IMPLEMENTAR
 	}
 
@@ -74,8 +84,16 @@ public class Viaje implements Serializable {
 	 *
 	 * @return	objeto JSON con los datos del Viaje
 	 */
-	public JSONObject toJSON() {
-		// POR IMPLEMENTAR
+	public JSONObject toJSON() { //REVISAR
+		JSONObject viajeJSON = new JSONObject();
+		viajeJSON.put("codviaje",getCodviaje());
+		viajeJSON.put("codprop",getCodprop());
+		viajeJSON.put("origen",getOrigen());
+		viajeJSON.put("destino",getDestino());
+		viajeJSON.put("fecha",getFecha());
+		viajeJSON.put("precio",getPrecio());
+		viajeJSON.put("numplazas",getNumplazas());
+		viajeJSON.put("pasajeros",getPasajeros());
 		return null; // MODIFICAR
 	}
 
