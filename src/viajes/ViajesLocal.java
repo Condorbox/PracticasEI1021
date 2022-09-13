@@ -3,6 +3,7 @@ package viajes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 
@@ -92,7 +93,7 @@ public class ViajesLocal {
 				}
 				else{
 					System.out.println("Se ha realizado la reserva con exito: ");
-					System.out.println(reserva.toString());
+					System.out.println(reserva.toJSONString());
 				}
 				// POR IMPLEMENTAR
 
@@ -101,6 +102,18 @@ public class ViajesLocal {
 
 			case 3: { // Anular una reserva
 
+				System.out.println("Introduzca el código del viaje a cancelar");
+				String codviaje = teclado.next();
+
+				JSONObject reserva = gestor.anulaReserva(codviaje,codcli);
+
+				if(reserva.isEmpty()){
+					System.out.println("Lo sentimos, pero no se ha anulado la reserva...");
+				}
+				else{
+					System.out.println("Se ha efectuado la anulación de la reserva con éxito.");
+					System.out.println(reserva.toJSONString());
+				}
 				// POR IMPLEMENTAR
 
 				break;
@@ -108,6 +121,16 @@ public class ViajesLocal {
 
 			case 4: { // Ofertar un viaje
 
+				System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
+				System.out.println("codcli,origen,destino,fecha,percio,numplazas");
+				String output = teclado.next();
+				Object[] vector = output.split(",");
+
+				JSONObject viajeNuevo = gestor.ofertaViaje((String) vector[0], (String) vector[1],(String) vector[2],
+																(String) vector[3],(long) vector[4],(long) vector[5]);
+
+				System.out.println("Se ha creado la siguiente oferta: ");
+				System.out.println(viajeNuevo.toJSONString());
 				// POR IMPLEMENTAR
 
 				break;
@@ -116,6 +139,19 @@ public class ViajesLocal {
 			case 5: { // Borrar un viaje ofertado
 
 				// POR IMPLEMENTAR
+
+				System.out.println("Introduce el código del viaje:");
+				String codviaje = teclado.next();
+
+				JSONObject viajeBorrado = gestor.borraViaje(codviaje,codcli);
+
+				if(viajeBorrado.isEmpty()){
+					System.out.println("No se ha borrado dicho viaje.");
+				}
+				else{
+					System.out.println("Se ha borrado el viaje con la siguiente información:");
+					System.out.println(viajeBorrado.toJSONString());
+				}
 
 				break;
 			}

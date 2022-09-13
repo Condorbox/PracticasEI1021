@@ -152,7 +152,7 @@ public class GestorViajes {
 				jsonArray.add(entry);
 			}
 		}
-		System.out.println(jsonArray);
+		//System.out.println(jsonArray);
 		return jsonArray;
 	}
 
