@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GestorViajes {
 
@@ -51,11 +50,6 @@ public class GestorViajes {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
-		new GestorViajes();
-	}
-
-
 	/**
 	 * Cuando cada cliente cierra su sesion volcamos los datos en el fichero para mantenerlos actualizados
 	 */
@@ -78,15 +72,9 @@ public class GestorViajes {
 	 */
 	private static void escribeFichero(FileWriter os) throws IOException {
 		JSONArray jsonArray = new JSONArray();
-		for (Map.Entry<String, Viaje> entry : mapa.entrySet()) {
-			JSONObject temp = new JSONObject();
-			temp.put(entry.getKey(), entry.getValue());
-			jsonArray.add(temp);
-		}
+		jsonArray.addAll(Collections.singleton(mapa));
 
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("mapa", jsonArray);
-		os.write(jsonObject.toJSONString());
+		os.write(jsonArray.toJSONString());
 	}
 
 	/**
@@ -139,8 +127,14 @@ public class GestorViajes {
 	private void rellenaDiccionario(JSONArray array) {
 		// POR IMPLEMENTAR
 		mapa = new HashMap<>();
-		for (Object obj : array){
-			JSONObject jsonObject = (JSONObject) obj;
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = (JSONObject) array.get(i);
+			Iterator keyIterator = jsonObject.keySet().stream().iterator();
+			while (keyIterator.hasNext()) {
+				String key = (String) keyIterator.next();
+				Viaje value = new Viaje((JSONObject) jsonObject.get(key));
+				mapa.put(key, value);
+			}
 		}
 	}
 
