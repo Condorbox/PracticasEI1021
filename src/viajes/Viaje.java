@@ -86,6 +86,7 @@ public class Viaje implements Serializable {
 	 */
 	public JSONObject toJSON() { //REVISAR
 		JSONObject viajeJSON = new JSONObject();
+
 		viajeJSON.put("codviaje",getCodviaje());
 		viajeJSON.put("codprop",getCodprop());
 		viajeJSON.put("origen",getOrigen());
@@ -94,7 +95,8 @@ public class Viaje implements Serializable {
 		viajeJSON.put("precio",getPrecio());
 		viajeJSON.put("numplazas",getNumplazas());
 		viajeJSON.put("pasajeros",getPasajeros());
-		return null; // MODIFICAR
+
+		return viajeJSON; // MODIFICAR
 	}
 
 	/**
