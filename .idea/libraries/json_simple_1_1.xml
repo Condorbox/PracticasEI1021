@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="json-simple-1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../ws_ei1021_2223/ViajesLocal_sol/lib/json-simple-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
