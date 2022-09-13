@@ -138,7 +138,6 @@ public class GestorViajes {
 		}
 	}
 
-
 	/**
 	 * Devuelve los viajes disponibles con un origen dado
 	 * 
@@ -147,9 +146,15 @@ public class GestorViajes {
 	 */
 	public JSONArray consultaViajes(String origen) {
 		// POR IMPLEMENTAR
-		return null; // MODIFICAR
+		JSONArray jsonArray = new JSONArray();
+		for (Map.Entry<String, Viaje> entry : mapa.entrySet()) {
+			if (entry.getValue().getOrigen().equals(origen)){
+				jsonArray.add(entry);
+			}
+		}
+		System.out.println(jsonArray);
+		return jsonArray;
 	}
-
 
 	/**
 	 * El cliente codcli reserva el viaje codviaje
@@ -160,7 +165,14 @@ public class GestorViajes {
 	 */
 	public JSONObject reservaViaje(String codviaje, String codcli) {
 		// POR IMPLEMENTAR
-		return null; // MODIFICAR
+		Viaje viaje = mapa.get(codviaje);
+		if(viaje != null) {
+			if (viaje.anyadePasajero(codcli)){
+				return viaje.toJSON();
+			}
+		}
+
+		return new JSONObject();
 	}
 
 	/**
@@ -172,7 +184,13 @@ public class GestorViajes {
 	 */
 	public JSONObject anulaReserva(String codviaje, String codcli) {
 		// POR IMPLEMENTAR
-		return null; // MODIFICAR
+		Viaje viaje = mapa.get(codviaje);
+		if(viaje != null) {
+			if (es_fecha_valida(viaje.getFecha()) && viaje.borraPasajero(codcli)){
+				return viaje.toJSON();
+			}
+		}
+		return new JSONObject();
 	}
 
 	/**
@@ -209,10 +227,10 @@ public class GestorViajes {
 	 */
 	public JSONObject ofertaViaje(String codcli, String origen, String destino, String fecha, long precio, long numplazas) {
 		// POR IMPLEMENTAR
-		return null; // MODIFICAR
+		Viaje nuevoViaje = new Viaje(codcli, origen, destino, fecha, precio, numplazas);
+		mapa.put(codcli, nuevoViaje);
+		return nuevoViaje.toJSON(); // TODO REVISAR si codcli es el código del viaje
 	}
-
-
 
 	/**
 	 * El cliente codcli borra un viaje que ha ofertado
@@ -223,7 +241,11 @@ public class GestorViajes {
 	 */
 	public JSONObject borraViaje(String codviaje, String codcli) {
 		// POR IMPLEMENTAR
-		return null; // MODIFICAR
+		Viaje viajeBorrado = mapa.remove(codviaje);
+		if (viajeBorrado != null) {
+			return viajeBorrado.toJSON();
+		}
+		return new JSONObject();
 	}
 
 
