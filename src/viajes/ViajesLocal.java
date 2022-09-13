@@ -56,12 +56,25 @@ public class ViajesLocal {
 			switch (opcion) {
 			case 0: // Guardar los datos en el fichero y salir del programa
 
+				gestor.guardaDatos();
+				System.out.println("Se ha guardado los datos correctamente.");
 				// POR IMPLEMENTAR
 
 				break;
 
 			case 1: { // Consultar viajes con un origen dado
 
+				System.out.println("Introduzca el nombre del origen para buscar viajes: ");
+				String origen = teclado.next();
+
+				JSONArray array = gestor.consultaViajes(origen);
+
+				if(array.isEmpty()){
+					System.out.println("Lo sentimos, no hemos encontrado ningún viaje con dicho destino.");
+				}
+				else{
+					System.out.println(array.toJSONString());
+				}
 				// POR IMPLEMENTAR
 
 				break;
@@ -69,6 +82,18 @@ public class ViajesLocal {
 
 			case 2: { // Reservar un viaje
 
+				System.out.print("Introduzca el codigo del viaje a reservar: ");
+				String codviaje = teclado.next();
+
+				JSONObject reserva = gestor.reservaViaje(codviaje,codcli);
+
+				if(reserva.isEmpty()){
+					System.out.println("Lo sentimos esta reserva no esta disponible.");
+				}
+				else{
+					System.out.println("Se ha realizado la reserva con exito: ");
+					System.out.println(reserva.toString());
+				}
 				// POR IMPLEMENTAR
 
 				break;
