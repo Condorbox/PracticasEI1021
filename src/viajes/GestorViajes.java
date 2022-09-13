@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class GestorViajes {
 
@@ -31,7 +32,7 @@ public class GestorViajes {
 	 * Crea o Lee un fichero con datos de prueba
 	 */
 	public GestorViajes() {
-		mapa =  new HashMap<String, Viaje>();
+		mapa = new HashMap<String, Viaje>();
 		File file = new File("viajes.json");
 		try {
 			if (!file.exists() ) {
@@ -48,6 +49,10 @@ public class GestorViajes {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) throws IOException {
+		new GestorViajes();
 	}
 
 
@@ -71,15 +76,23 @@ public class GestorViajes {
 	 * 
 	 * @param os	stream de escritura asociado al fichero de datos
 	 */
-	private void escribeFichero(FileWriter os) {
-		// POR IMPLEMENTAR
-	}
+	private static void escribeFichero(FileWriter os) throws IOException {
+		JSONArray jsonArray = new JSONArray();
+		for (Map.Entry<String, Viaje> entry : mapa.entrySet()) {
+			JSONObject temp = new JSONObject();
+			temp.put(entry.getKey(), entry.getValue());
+			jsonArray.add(temp);
+		}
 
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("mapa", jsonArray);
+		os.write(jsonObject.toJSONString());
+	}
 
 	/**
 	 * Genera los datos iniciales
 	 */
-	private void generaDatos() {
+	private static void generaDatos() {
 
 		Viaje viaje = new Viaje("pedro", "Castellón", "Alicante", "28-05-2023", 16, 1);
 		mapa.put(viaje.getCodviaje(), viaje);
@@ -125,6 +138,10 @@ public class GestorViajes {
 	 */
 	private void rellenaDiccionario(JSONArray array) {
 		// POR IMPLEMENTAR
+		mapa = new HashMap<>();
+		for (Object obj : array){
+			JSONObject jsonObject = (JSONObject) obj;
+		}
 	}
 
 
