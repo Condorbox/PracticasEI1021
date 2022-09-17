@@ -1,8 +1,8 @@
 package viajes;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +10,7 @@ import java.util.Vector;
 
 public class Viaje implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	/**
@@ -43,7 +44,7 @@ public class Viaje implements Serializable {
 		this.fecha = fecha;
 		this.precio = precio;
 		this.numplazas = numplazas;
-		this.pasajeros = new Vector<String>();
+		this.pasajeros = new Vector<>();
 		
 		this.codviaje = this.construyeCodviaje();
 
@@ -63,7 +64,7 @@ public class Viaje implements Serializable {
 		precio = (long)(jsonViaje.get("precio"));
 		numplazas = (long)(jsonViaje.get("numplazas"));
 
-		pasajeros = new Vector<String>();
+		pasajeros = new Vector<>();
 		codviaje = this.construyeCodviaje();
 
 		// POR IMPLEMENTAR

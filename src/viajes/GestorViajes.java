@@ -152,7 +152,6 @@ public class GestorViajes {
 				jsonArray.add(entry);
 			}
 		}
-		//System.out.println(jsonArray);
 		return jsonArray;
 	}
 
@@ -167,7 +166,7 @@ public class GestorViajes {
 		// POR IMPLEMENTAR
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
-			if (viaje.anyadePasajero(codcli)){
+			if (es_fecha_valida((viaje.getFecha())) && viaje.anyadePasajero(codcli)){
 				return viaje.toJSON();
 			}
 		}
@@ -241,10 +240,12 @@ public class GestorViajes {
 	 */
 	public JSONObject borraViaje(String codviaje, String codcli) {
 		// POR IMPLEMENTAR
-		Viaje viajeBorrado = mapa.remove(codviaje);
-		if (viajeBorrado != null) {
-			return viajeBorrado.toJSON();
+		Viaje viajePorBorrar = mapa.get(codviaje);
+		if (viajePorBorrar != null && es_fecha_valida(viajePorBorrar.getFecha()) && viajePorBorrar.getCodprop().equals(codcli)){
+			viajePorBorrar = mapa.remove(codviaje);
+			return viajePorBorrar != null ? viajePorBorrar.toJSON() : new JSONObject();
 		}
+
 		return new JSONObject();
 	}
 
