@@ -125,7 +125,6 @@ public class GestorViajes {
 	 * @param array	JSONArray con los datos de los Viajes
 	 */
 	private void rellenaDiccionario(JSONArray array) {
-		// POR IMPLEMENTAR
 		mapa = new HashMap<>();
 		for (int i = 0; i < array.size(); i++) {
 			JSONObject jsonObject = (JSONObject) array.get(i);
@@ -145,7 +144,6 @@ public class GestorViajes {
 	 * @return JSONArray de viajes con un origen dado. Vacío si no hay viajes disponibles con ese origen
 	 */
 	public JSONArray consultaViajes(String origen) {
-		// POR IMPLEMENTAR
 		JSONArray jsonArray = new JSONArray();
 		for (Map.Entry<String, Viaje> entry : mapa.entrySet()) {
 			if (entry.getValue().getOrigen().equals(origen)){
@@ -163,7 +161,6 @@ public class GestorViajes {
 	 * @return JSONObject con la información del viaje. Vacío si no existe o no está disponible
 	 */
 	public JSONObject reservaViaje(String codviaje, String codcli) {
-		// POR IMPLEMENTAR
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
 			if (es_fecha_valida((viaje.getFecha())) && !viaje.Contains(codcli) && viaje.anyadePasajero(codcli)){
@@ -182,7 +179,6 @@ public class GestorViajes {
 	 * @return	JSON del viaje en que se ha anulado la reserva. JSON vacio si no se ha anulado
 	 */
 	public JSONObject anulaReserva(String codviaje, String codcli) {
-		// POR IMPLEMENTAR
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
 			if (es_fecha_valida(viaje.getFecha()) && viaje.borraPasajero(codcli)){
@@ -225,7 +221,6 @@ public class GestorViajes {
 	 * @return	JSONObject con los datos del viaje ofertado
 	 */
 	public JSONObject ofertaViaje(String codcli, String origen, String destino, String fecha, long precio, long numplazas) {
-		// POR IMPLEMENTAR
 		Viaje nuevoViaje = new Viaje(codcli, origen, destino, fecha, precio, numplazas);
 
 		if(!es_fecha_valida(nuevoViaje.getFecha())) {
@@ -244,7 +239,6 @@ public class GestorViajes {
 	 * @return	JSONObject del viaje borrado. JSON vacio si no se ha borrado
 	 */
 	public JSONObject borraViaje(String codviaje, String codcli) {
-		// POR IMPLEMENTAR
 		Viaje viajePorBorrar = mapa.get(codviaje);
 		if (viajePorBorrar != null && es_fecha_valida(viajePorBorrar.getFecha()) && viajePorBorrar.getCodprop().equals(codcli)){
 			viajePorBorrar = mapa.remove(codviaje);

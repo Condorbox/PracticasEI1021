@@ -59,7 +59,7 @@ public class ViajesLocal {
 					gestor.guardaDatos();
 					System.out.println("Se ha guardado los datos correctamente.");
 				}
-				// POR IMPLEMENTAR
+
 
 				case 1 -> { // Consultar viajes con un origen dado
 
@@ -73,7 +73,6 @@ public class ViajesLocal {
 					} else {
 						System.out.println(array.toJSONString());
 					}
-					// POR IMPLEMENTAR
 
 				}
 				case 2 -> { // Reservar un viaje
@@ -89,7 +88,6 @@ public class ViajesLocal {
 						System.out.println("Se ha realizado la reserva con exito: ");
 						System.out.println(reserva.toJSONString());
 					}
-					// POR IMPLEMENTAR
 
 				}
 				case 3 -> { // Anular una reserva
@@ -105,13 +103,12 @@ public class ViajesLocal {
 						System.out.println("Se ha efectuado la anulación de la reserva con éxito.");
 						System.out.println(reserva.toJSONString());
 					}
-					// POR IMPLEMENTAR
 
 				}
 				case 4 -> { // Ofertar un viaje
 
 					System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
-					System.out.println("origen,destino,fecha,percio,numplazas");
+					System.out.println("origen,destino,fecha,precio,numplazas");
 					String output = teclado.next();
 					Object[] vector = output.split(",");
 
@@ -123,12 +120,9 @@ public class ViajesLocal {
 						System.out.println("Se ha creado la siguiente oferta: ");
 						System.out.println(viajeNuevo.toJSONString());
 					}
-					// POR IMPLEMENTAR
 
 				}
 				case 5 -> { // Borrar un viaje ofertado
-
-					// POR IMPLEMENTAR
 
 					System.out.println("Introduce el código del viaje:");
 					String codviaje = teclado.next();

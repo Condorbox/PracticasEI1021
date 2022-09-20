@@ -55,7 +55,7 @@ public class Viaje implements Serializable {
 	 *
 	 * @param jsonViaje
 	 */
-	public Viaje(JSONObject jsonViaje) { //REVISAR
+	public Viaje(JSONObject jsonViaje) {
 		super();
 		codprop = (String) jsonViaje.get("codprop");
 		origen = (String) jsonViaje.get("origen");
@@ -67,7 +67,6 @@ public class Viaje implements Serializable {
 		pasajeros = new Vector<>();
 		codviaje = this.construyeCodviaje();
 
-		// POR IMPLEMENTAR
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class Viaje implements Serializable {
 	 *
 	 * @return	objeto JSON con los datos del Viaje
 	 */
-	public JSONObject toJSON() { //REVISAR
+	public JSONObject toJSON() {
 		JSONObject viajeJSON = new JSONObject();
 
 		viajeJSON.put("codviaje",getCodviaje());
@@ -97,7 +96,7 @@ public class Viaje implements Serializable {
 		viajeJSON.put("numplazas",getNumplazas());
 		viajeJSON.put("pasajeros",getPasajeros());
 
-		return viajeJSON; // MODIFICAR
+		return viajeJSON;
 	}
 
 	/**
