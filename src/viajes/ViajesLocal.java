@@ -117,9 +117,12 @@ public class ViajesLocal {
 
 					JSONObject viajeNuevo = gestor.ofertaViaje(codcli, (String) vector[0], (String) vector[1],
 							(String) vector[2], Long.parseLong((String) vector[3]), Long.parseLong((String) vector[4]));
-
-					System.out.println("Se ha creado la siguiente oferta: ");
-					System.out.println(viajeNuevo.toJSONString());
+					if (viajeNuevo.isEmpty()) {
+						System.out.println("Lo sentimos, ese viaje no es valido");
+					} else {
+						System.out.println("Se ha creado la siguiente oferta: ");
+						System.out.println(viajeNuevo.toJSONString());
+					}
 					// POR IMPLEMENTAR
 
 				}

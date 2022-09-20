@@ -157,6 +157,16 @@ public class Viaje implements Serializable {
 		}
 		return false;
 	}
+
+	public boolean Contains(String pasajero) {
+		for (String p: pasajeros) {
+			if (p.equals(pasajero)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 	
 	public String getCodviaje() {
 		return codviaje;

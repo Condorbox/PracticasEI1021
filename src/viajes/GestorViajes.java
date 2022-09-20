@@ -166,7 +166,7 @@ public class GestorViajes {
 		// POR IMPLEMENTAR
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
-			if (es_fecha_valida((viaje.getFecha())) && viaje.anyadePasajero(codcli)){
+			if (es_fecha_valida((viaje.getFecha())) && !viaje.Contains(codcli) && viaje.anyadePasajero(codcli)){
 				return viaje.toJSON();
 			}
 		}
@@ -227,6 +227,11 @@ public class GestorViajes {
 	public JSONObject ofertaViaje(String codcli, String origen, String destino, String fecha, long precio, long numplazas) {
 		// POR IMPLEMENTAR
 		Viaje nuevoViaje = new Viaje(codcli, origen, destino, fecha, precio, numplazas);
+
+		if(!es_fecha_valida(nuevoViaje.getFecha())) {
+			return new JSONObject();
+		}
+
 		mapa.put(nuevoViaje.getCodviaje(), nuevoViaje);
 		return nuevoViaje.toJSON();
 	}
