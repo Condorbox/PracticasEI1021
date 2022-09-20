@@ -69,7 +69,7 @@ public class ViajesLocal {
 					JSONArray array = gestor.consultaViajes(origen);
 
 					if (array.isEmpty()) {
-						System.out.println("Lo sentimos, no hemos encontrado ningún viaje con dicho destino.");
+						System.out.println("Lo sentimos, no hemos encontrado ningún viaje con dicho origen.");
 					} else {
 						System.out.println(array.toJSONString());
 					}
@@ -111,12 +111,12 @@ public class ViajesLocal {
 				case 4 -> { // Ofertar un viaje
 
 					System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
-					System.out.println("codcli,origen,destino,fecha,percio,numplazas");
+					System.out.println("origen,destino,fecha,percio,numplazas");
 					String output = teclado.next();
 					Object[] vector = output.split(",");
 
-					JSONObject viajeNuevo = gestor.ofertaViaje((String) vector[0], (String) vector[1], (String) vector[2],
-							(String) vector[3], Long.parseLong((String) vector[4]), Long.parseLong((String) vector[5]));
+					JSONObject viajeNuevo = gestor.ofertaViaje(codcli, (String) vector[0], (String) vector[1],
+							(String) vector[2], Long.parseLong((String) vector[3]), Long.parseLong((String) vector[4]));
 
 					System.out.println("Se ha creado la siguiente oferta: ");
 					System.out.println(viajeNuevo.toJSONString());
