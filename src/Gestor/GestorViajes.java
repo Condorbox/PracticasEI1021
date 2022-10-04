@@ -72,8 +72,9 @@ public class GestorViajes {
 	 */
 	private static void escribeFichero(FileWriter os) throws IOException {
 		JSONArray jsonArray = new JSONArray();
-		jsonArray.addAll(Collections.singleton(mapa));
-
+		for (Map.Entry<String, Viaje> entry: mapa.entrySet()) {
+			jsonArray.add(entry.getValue());
+		}
 		os.write(jsonArray.toJSONString());
 	}
 
@@ -127,13 +128,8 @@ public class GestorViajes {
 	private void rellenaDiccionario(JSONArray array) {
 		mapa = new HashMap<>();
 		for (int i = 0; i < array.size(); i++) {
-			JSONObject jsonObject = (JSONObject) array.get(i);
-			Iterator keyIterator = jsonObject.keySet().stream().iterator();
-			while (keyIterator.hasNext()) {
-				String key = (String) keyIterator.next();
-				Viaje value = new Viaje((JSONObject) jsonObject.get(key));
-				mapa.put(key, value);
-			}
+			Viaje viaje = new Viaje((JSONObject) array.get(i));
+			mapa.put(viaje.getCodviaje(), viaje);
 		}
 	}
 

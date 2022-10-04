@@ -39,7 +39,7 @@ class HiloServidorViajes implements Runnable {
 		String operacion = "0";
 		boolean done = false;
 	    // ...
-		try {
+		/*try {
 			while (!done) {
 				// Recibe una petición del cliente
 				// Extrae la operación y sus parámetros
@@ -84,7 +84,7 @@ class HiloServidorViajes implements Runnable {
 		}
 		catch (Exception ex) {
 			System.out.println("Exception caught in thread: " + ex);
-		} // fin catch
+		} // fin catch*/
 	} //fin run
 
 } //fin class 
