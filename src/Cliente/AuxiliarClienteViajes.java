@@ -47,9 +47,21 @@ public class AuxiliarClienteViajes {
 	 * @param origen	origen del viaje ofertado
 	 * @return array JSON de viajes desde un origen. array vacio si no hay ninguno
 	 */
-	public JSONArray consultaViajes(String origen) {
-		// POR IMPLEMENTAR
-		return null; // cambiar por el retorno correcto
+	public JSONArray consultaViajes(String origen) throws IOException, ParseException {
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "1");
+		peticion.put("origen",origen);
+
+		mySocket.sendMessage(peticion.toJSONString());
+
+		String respuesta =  mySocket.receiveMessage();
+
+		JSONArray jsonArray = null;
+		JSONParser jsonParser = new JSONParser();
+		Object object = jsonParser.parse(respuesta);
+		jsonArray = (JSONArray) object;
+
+		return jsonArray;
 	} // end consultaViajes
 
 
@@ -61,9 +73,20 @@ public class AuxiliarClienteViajes {
 	 * @param codcliente	codigo del pasajero
 	 * @return	objeto JSON con los datos del viaje. Vacio si no se ha podido reservar
 	 */
-	public JSONObject reservaViaje(String codviaje, String codcliente) {
-		// POR IMPLEMENTAR
-		return null; // cambiar por el retorno correcto
+	public JSONObject reservaViaje(String codviaje, String codcliente) throws IOException, ParseException {
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "2");
+		peticion.put("codviaje",codviaje);
+		peticion.put("codcliente",codcliente);
+
+		mySocket.sendMessage(peticion.toJSONString());
+
+		String respuesta =  mySocket.receiveMessage();
+
+		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
+
+		return jsonObject;
+
 	} // end reservaViaje
 	
 	/**
@@ -73,9 +96,19 @@ public class AuxiliarClienteViajes {
 	 * @param codcliente	codigo del pasajero
 	 * @return	objeto JSON con los datos del viaje. Vacio si no se ha podido reservar
 	 */
-	public JSONObject anulaReserva(String codviaje, String codcliente) {
-		// POR IMPLEMENTAR
-		return null; // cambiar por el retorno correcto
+	public JSONObject anulaReserva(String codviaje, String codcliente) throws IOException, ParseException {
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "3");
+		peticion.put("codviaje",codviaje);
+		peticion.put("codcliente",codcliente);
+
+		mySocket.sendMessage(peticion.toJSONString());
+
+		String respuesta =  mySocket.receiveMessage();
+
+		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
+
+		return jsonObject;
 	} // end anulaReserva
 
 	/**
@@ -90,9 +123,23 @@ public class AuxiliarClienteViajes {
 	 * @return	viaje ofertado en formatoJSON. Vacio si no se ha podido ofertar
 	 */
 	public JSONObject ofertaViaje(String codprop, String origen, String destino,
-			String fecha, long precio, long numplazas) {
-		// POR IMPLEMENTAR
-		return null; // cambiar por el retorno correcto
+			String fecha, long precio, long numplazas) throws IOException, ParseException {
+
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "4");
+		peticion.put("codprop",codprop);
+		peticion.put("origen",origen);
+		peticion.put("destino",destino);
+		peticion.put("fecha",fecha);
+		peticion.put("precio",precio);
+		peticion.put("numplazas",numplazas);
+
+		mySocket.sendMessage(peticion.toJSONString());
+		String respuesta =  mySocket.receiveMessage();
+
+		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
+
+		return jsonObject;
 	} // end ofertaViaje
 
 	/**
@@ -102,16 +149,29 @@ public class AuxiliarClienteViajes {
 	 * @param codcliente	codigo del pasajero
 	 * @return	objeto JSON con los datos del viaje. Vacio si no se ha podido reservar
 	 */
-	public JSONObject borraViaje(String codviaje, String codcliente) {
-		// POR IMPLEMENTAR
-		return null; // cambiar por el retorno correcto
+	public JSONObject borraViaje(String codviaje, String codcliente) throws IOException, ParseException {
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "5");
+		peticion.put("codviaje",codviaje);
+		peticion.put("codcliente",codcliente);
+
+		mySocket.sendMessage(peticion.toJSONString());
+		String respuesta =  mySocket.receiveMessage();
+
+		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
+
+		return jsonObject;
 	} // end borraViaje
 
 	/**
 	 * Finaliza la conexion con el servidor
 	 */
-	public void cierraSesion( ) {
-		// POR IMPLEMENTAR
-		return; // cambiar por el retorno correcto
+	public void cierraSesion( ) throws IOException, ParseException {
+		JSONObject peticion = new JSONObject();
+		peticion.put("operacion", "0");
+
+		mySocket.sendMessage(peticion.toJSONString());
+		String respuesta =  mySocket.receiveMessage();
+
 	} // end done
 } //end class

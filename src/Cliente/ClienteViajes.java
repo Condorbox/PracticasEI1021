@@ -11,7 +11,6 @@ import org.json.simple.JSONObject;
 public class ClienteViajes {
 
     // Modifícala para que instancie un objeto de la clase AuxiliarClienteViajes
-
     // Modifica todas las llamadas al objeto de la clase GestorViajes
     // por llamadas al objeto de la clase AuxiliarClienteViajes.
     // Los métodos a llamar tendrán la misma signatura.
@@ -47,107 +46,108 @@ public class ClienteViajes {
      *
      * @param args	no se usan argumentos de entrada al programa principal
      */
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws IOException {
 
         Scanner teclado = new Scanner(System.in);
 
-        // Crea un gestor de viajes
-        GestorViajes gestor = new GestorViajes();
+        // Crea un AuxiliarClientesViajes
+
+        AuxiliarClienteViajes auxiliarClienteViajes = new AuxiliarClienteViajes("localhost","12345");
 
         System.out.print("Introduce tu codigo de cliente: ");
         String codcli = teclado.nextLine();
+        try {
+            int opcion;
+            do {
+                opcion = menu(teclado);
+                switch (opcion) {
+                    case 0 -> { // Guardar los datos en el fichero y salir del programa
 
-        int opcion;
-        do {
-            opcion = menu(teclado);
-            switch (opcion) {
-                case 0 -> { // Guardar los datos en el fichero y salir del programa
-
-                    gestor.guardaDatos();
-                    System.out.println("Se ha guardado los datos correctamente.");
-                }
-
-
-                case 1 -> { // Consultar viajes con un origen dado
-
-                    System.out.println("Introduzca el nombre del origen para buscar viajes: ");
-                    String origen = teclado.next();
-
-                    JSONArray array = gestor.consultaViajes(origen);
-
-                    if (array.isEmpty()) {
-                        System.out.println("Lo sentimos, no hemos encontrado ningún viaje con dicho origen.");
-                    } else {
-                        System.out.println(array.toJSONString());
+                        auxiliarClienteViajes.cierraSesion();
+                        System.out.println("Se ha guardado los datos correctamente.");
                     }
 
-                }
-                case 2 -> { // Reservar un viaje
 
-                    System.out.print("Introduzca el codigo del viaje a reservar: ");
-                    String codviaje = teclado.next();
+                    case 1 -> { // Consultar viajes con un origen dado
 
-                    JSONObject reserva = gestor.reservaViaje(codviaje, codcli);
+                        System.out.println("Introduzca el nombre del origen para buscar viajes: ");
+                        String origen = teclado.next();
 
-                    if (reserva.isEmpty()) {
-                        System.out.println("Lo sentimos esta reserva no esta disponible.");
-                    } else {
-                        System.out.println("Se ha realizado la reserva con exito: ");
-                        System.out.println(reserva.toJSONString());
+                        JSONArray array = auxiliarClienteViajes.consultaViajes(origen);
+
+                        if (array.isEmpty()) {
+                            System.out.println("Lo sentimos, no hemos encontrado ningún viaje con dicho origen.");
+                        } else {
+                            System.out.println(array.toJSONString());
+                        }
+
                     }
+                    case 2 -> { // Reservar un viaje
 
-                }
-                case 3 -> { // Anular una reserva
+                        System.out.print("Introduzca el codigo del viaje a reservar: ");
+                        String codviaje = teclado.next();
 
-                    System.out.println("Introduzca el código del viaje a cancelar");
-                    String codviaje = teclado.next();
+                        JSONObject reserva = auxiliarClienteViajes.reservaViaje(codviaje, codcli);
 
-                    JSONObject reserva = gestor.anulaReserva(codviaje, codcli);
+                        if (reserva.isEmpty()) {
+                            System.out.println("Lo sentimos esta reserva no esta disponible.");
+                        } else {
+                            System.out.println("Se ha realizado la reserva con exito: ");
+                            System.out.println(reserva.toJSONString());
+                        }
 
-                    if (reserva.isEmpty()) {
-                        System.out.println("Lo sentimos, pero no se ha anulado la reserva...");
-                    } else {
-                        System.out.println("Se ha efectuado la anulación de la reserva con éxito.");
-                        System.out.println(reserva.toJSONString());
                     }
+                    case 3 -> { // Anular una reserva
 
-                }
-                case 4 -> { // Ofertar un viaje
+                        System.out.println("Introduzca el código del viaje a cancelar");
+                        String codviaje = teclado.next();
 
-                    System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
-                    System.out.println("origen,destino,fecha,precio,numplazas");
-                    String output = teclado.next();
-                    Object[] vector = output.split(",");
+                        JSONObject reserva = auxiliarClienteViajes.anulaReserva(codviaje, codcli);
 
-                    JSONObject viajeNuevo = gestor.ofertaViaje(codcli, (String) vector[0], (String) vector[1],
-                            (String) vector[2], Long.parseLong((String) vector[3]), Long.parseLong((String) vector[4]));
-                    if (viajeNuevo.isEmpty()) {
-                        System.out.println("Lo sentimos, ese viaje no es valido");
-                    } else {
-                        System.out.println("Se ha creado la siguiente oferta: ");
-                        System.out.println(viajeNuevo.toJSONString());
+                        if (reserva.isEmpty()) {
+                            System.out.println("Lo sentimos, pero no se ha anulado la reserva...");
+                        } else {
+                            System.out.println("Se ha efectuado la anulación de la reserva con éxito.");
+                            System.out.println(reserva.toJSONString());
+                        }
+
                     }
+                    case 4 -> { // Ofertar un viaje
 
-                }
-                case 5 -> { // Borrar un viaje ofertado
+                        System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
+                        System.out.println("origen,destino,fecha,precio,numplazas");
+                        String output = teclado.next();
+                        Object[] vector = output.split(",");
 
-                    System.out.println("Introduce el código del viaje:");
-                    String codviaje = teclado.next();
+                        JSONObject viajeNuevo = auxiliarClienteViajes.ofertaViaje(codcli, (String) vector[0], (String) vector[1],
+                                (String) vector[2], Long.parseLong((String) vector[3]), Long.parseLong((String) vector[4]));
+                        if (viajeNuevo.isEmpty()) {
+                            System.out.println("Lo sentimos, ese viaje no es valido");
+                        } else {
+                            System.out.println("Se ha creado la siguiente oferta: ");
+                            System.out.println(viajeNuevo.toJSONString());
+                        }
 
-                    JSONObject viajeBorrado = gestor.borraViaje(codviaje, codcli);
-
-                    if (viajeBorrado.isEmpty()) {
-                        System.out.println("No se ha borrado dicho viaje.");
-                    } else {
-                        System.out.println("Se ha borrado el viaje con la siguiente información:");
-                        System.out.println(viajeBorrado.toJSONString());
                     }
+                    case 5 -> { // Borrar un viaje ofertado
 
-                }
-            } // fin switch
+                        System.out.println("Introduce el código del viaje:");
+                        String codviaje = teclado.next();
 
-        } while (opcion != 0);
+                        JSONObject viajeBorrado = auxiliarClienteViajes.borraViaje(codviaje, codcli);
 
+                        if (viajeBorrado.isEmpty()) {
+                            System.out.println("No se ha borrado dicho viaje.");
+                        } else {
+                            System.out.println("Se ha borrado el viaje con la siguiente información:");
+                            System.out.println(viajeBorrado.toJSONString());
+                        }
+
+                    }
+                } // fin switch
+
+            } while (opcion != 0);
+        }catch (Exception e){e.printStackTrace();}
     } // fin main
 
 } // fin class
