@@ -45,71 +45,43 @@ class HiloServidorViajes implements Runnable {
 				String res = "";
 				operacion = (String) campos.get("operacion");
 				switch (operacion) {
-				case "0":
-					gestor.guardaDatos();
-					res = "Se ha guardado los datos correctamente.";
-					done = true;
-					break;
+					case "0":
+						gestor.guardaDatos();
+						done = true;
+						break;
 
-				case "1": { // Consulta los viajes con un origen dado
-					JSONArray array = gestor.consultaViajes((String) campos.get("origen"));
+					case "1": { // Consulta los viajes con un origen dado
+						res = gestor.consultaViajes((String) campos.get("origen")).toJSONString();
 
-					if (array.isEmpty()) {
-						res = "Lo sentimos, no hemos encontrado ningún viaje con dicho origen.";
-					} else {
-						res = array.toJSONString();
+						break;
 					}
+					case "2": { // Reserva una plaza en un viaje
+						res = gestor.reservaViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
 
-					break;
-				} 
-				case "2": { // Reserva una plaza en un viaje
-					JSONObject reserva = gestor.reservaViaje((String) campos.get("codviaje"), (String) campos.get("codcli"));
-
-					if (reserva.isEmpty()) {
-						res = "Lo sentimos esta reserva no esta disponible.";
-					} else {
-						res = "Se ha realizado la reserva con exito: \n" + reserva.toJSONString();
+						break;
 					}
+					case "3": { // Anular una reserva
+						res = gestor.anulaReserva((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
 
-					break;
-				}             
-				case "3": { // Anular una reserva
-					JSONObject reserva = gestor.anulaReserva((String) campos.get("codviaje"), (String) campos.get("codcli"));
-
-					if (reserva.isEmpty()) {
-						res = "Lo sentimos, pero no se ha anulado la reserva...";
-					} else {
-						res = "Se ha efectuado la anulación de la reserva con éxito.\n" + reserva.toJSONString();
+						break;
 					}
+					case "4": { // Oferta un viaje
+						//String codcli, String origen, String destino, String fecha, long precio, long numplazas
+						res = gestor.ofertaViaje((String) campos.get("codcli"), (String) campos.get("origen"), (String) campos.get("destino"),
+								(String) campos.get("fecha"), (long) campos.get("precio"), (long) campos.get("numplazas")).toJSONString();
 
-					break;
-				}
-				case "4": { // Oferta un viaje
-					//String codcli, String origen, String destino, String fecha, long precio, long numplazas
-					JSONObject viajeNuevo = gestor.ofertaViaje((String) campos.get("codcli"), (String) campos.get("origen"), (String) campos.get("destino"),
-							(String) campos.get("fecha"), (long) campos.get("precio"), (long) campos.get("numplazas"));
-					if (viajeNuevo.isEmpty()) {
-						res = "Lo sentimos, ese viaje no es valido";
-					} else {
-						res = "Se ha creado la siguiente oferta: \n" + viajeNuevo.toJSONString();
+						break;
 					}
+					case "5": { // Borra un viaje
+						res = gestor.borraViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
 
-					break;
-				}
-				case "5": { // Borra un viaje
-					JSONObject viajeBorrado = gestor.borraViaje((String) campos.get("codviaje"), (String) campos.get("codcli"));
-
-					if (viajeBorrado.isEmpty()) {
-						res = "No se ha borrado dicho viaje.";
-					} else {
-						res = "Se ha borrado el viaje con la siguiente información:\n" + viajeBorrado.toJSONString();
+						break;
 					}
-					break;
-				}
 				} // fin switch
-				myDataSocket.sendMessage(res);
 				if (operacion.equals("0")){
 					myDataSocket.close();
+				}else {
+					myDataSocket.sendMessage(res);
 				}
 			} // fin while   
 		} // fin try
@@ -133,5 +105,4 @@ class HiloServidorViajes implements Runnable {
 			return null;
 		}
 	}
-
 } //fin class 

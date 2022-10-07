@@ -54,7 +54,7 @@ public class AuxiliarClienteViajes {
 
 		mySocket.sendMessage(peticion.toJSONString());
 
-		String respuesta =  mySocket.receiveMessage();
+		String respuesta = mySocket.receiveMessage();
 
 		JSONArray jsonArray = null;
 		JSONParser jsonParser = new JSONParser();
