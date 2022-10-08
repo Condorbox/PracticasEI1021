@@ -113,7 +113,6 @@ public class ClienteViajes {
 
                     }
                     case 4 -> { // Ofertar un viaje
-
                         System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
                         System.out.println("origen,destino,fecha,precio,numplazas");
                         String output = teclado.next();

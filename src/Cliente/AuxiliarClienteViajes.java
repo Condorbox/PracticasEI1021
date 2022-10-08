@@ -122,7 +122,6 @@ public class AuxiliarClienteViajes {
 	 */
 	public JSONObject ofertaViaje(String codprop, String origen, String destino,
 			String fecha, long precio, long numplazas) throws IOException, ParseException {
-
 		JSONObject peticion = new JSONObject();
 		peticion.put("operacion", "4");
 		peticion.put("codprop",codprop);

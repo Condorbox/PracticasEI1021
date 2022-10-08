@@ -67,7 +67,7 @@ class HiloServidorViajes implements Runnable {
 					}
 					case "4": { // Oferta un viaje
 						//String codcli, String origen, String destino, String fecha, long precio, long numplazas
-						res = gestor.ofertaViaje((String) campos.get("codcli"), (String) campos.get("origen"), (String) campos.get("destino"),
+						res = gestor.ofertaViaje((String) campos.get("codprop"), (String) campos.get("origen"), (String) campos.get("destino"),
 								(String) campos.get("fecha"), (long) campos.get("precio"), (long) campos.get("numplazas")).toJSONString();
 
 						break;
