@@ -64,8 +64,6 @@ public class AuxiliarClienteViajes {
 		return jsonArray;
 	} // end consultaViajes
 
-
-
 	/**
 	 * Un pasajero reserva un viaje
 	 * 

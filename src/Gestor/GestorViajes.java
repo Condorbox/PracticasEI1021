@@ -143,7 +143,7 @@ public class GestorViajes {
 		JSONArray jsonArray = new JSONArray();
 		for (Map.Entry<String, Viaje> entry : mapa.entrySet()) {
 			if (entry.getValue().getOrigen().equals(origen)){
-				jsonArray.add(entry);
+				jsonArray.add(entry.getValue());
 			}
 		}
 		return jsonArray;
