@@ -75,7 +75,7 @@ public class AuxiliarClienteViajes {
 		JSONObject peticion = new JSONObject();
 		peticion.put("operacion", "2");
 		peticion.put("codviaje",codviaje);
-		peticion.put("codcliente",codcliente);
+		peticion.put("codcli",codcliente);
 
 		mySocket.sendMessage(peticion.toJSONString());
 
@@ -98,7 +98,7 @@ public class AuxiliarClienteViajes {
 		JSONObject peticion = new JSONObject();
 		peticion.put("operacion", "3");
 		peticion.put("codviaje",codviaje);
-		peticion.put("codcliente",codcliente);
+		peticion.put("codcli",codcliente);
 
 		mySocket.sendMessage(peticion.toJSONString());
 
@@ -150,7 +150,7 @@ public class AuxiliarClienteViajes {
 		JSONObject peticion = new JSONObject();
 		peticion.put("operacion", "5");
 		peticion.put("codviaje",codviaje);
-		peticion.put("codcliente",codcliente);
+		peticion.put("codcli",codcliente);
 
 		mySocket.sendMessage(peticion.toJSONString());
 		String respuesta =  mySocket.receiveMessage();

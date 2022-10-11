@@ -236,6 +236,7 @@ public class GestorViajes {
 	 */
 	public JSONObject borraViaje(String codviaje, String codcli) {
 		Viaje viajePorBorrar = mapa.get(codviaje);
+		System.out.println(viajePorBorrar.getCodprop() + " cliente-> " + codcli);
 		if (viajePorBorrar != null && es_fecha_valida(viajePorBorrar.getFecha()) && viajePorBorrar.getCodprop().equals(codcli)){
 			viajePorBorrar = mapa.remove(codviaje);
 			return viajePorBorrar != null ? viajePorBorrar.toJSON() : new JSONObject();
