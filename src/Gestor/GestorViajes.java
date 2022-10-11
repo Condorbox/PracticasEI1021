@@ -156,10 +156,11 @@ public class GestorViajes {
 	 * @param codcli
 	 * @return JSONObject con la información del viaje. Vacío si no existe o no está disponible
 	 */
+	//TODO te puedes reservar en tu propio viaje
 	public JSONObject reservaViaje(String codviaje, String codcli) {
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
-			if (es_fecha_valida((viaje.getFecha())) && !viaje.Contains(codcli) && viaje.anyadePasajero(codcli)){
+			if (!viaje.getCodprop().equals(codcli) && es_fecha_valida((viaje.getFecha())) && !viaje.Contains(codcli) && viaje.anyadePasajero(codcli)) {
 				return viaje.toJSON();
 			}
 		}
@@ -236,7 +237,6 @@ public class GestorViajes {
 	 */
 	public JSONObject borraViaje(String codviaje, String codcli) {
 		Viaje viajePorBorrar = mapa.get(codviaje);
-		System.out.println(viajePorBorrar.getCodprop() + " cliente-> " + codcli);
 		if (viajePorBorrar != null && es_fecha_valida(viajePorBorrar.getFecha()) && viajePorBorrar.getCodprop().equals(codcli)){
 			viajePorBorrar = mapa.remove(codviaje);
 			return viajePorBorrar != null ? viajePorBorrar.toJSON() : new JSONObject();
