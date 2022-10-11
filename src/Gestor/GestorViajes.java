@@ -156,7 +156,6 @@ public class GestorViajes {
 	 * @param codcli
 	 * @return JSONObject con la información del viaje. Vacío si no existe o no está disponible
 	 */
-	//TODO te puedes reservar en tu propio viaje
 	public JSONObject reservaViaje(String codviaje, String codcli) {
 		Viaje viaje = mapa.get(codviaje);
 		if(viaje != null) {
