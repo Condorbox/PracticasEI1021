@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -117,7 +118,6 @@ public class GestorViajes {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -163,7 +163,6 @@ public class GestorViajes {
 				return viaje.toJSON();
 			}
 		}
-
 		return new JSONObject();
 	}
 

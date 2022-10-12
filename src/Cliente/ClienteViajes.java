@@ -3,7 +3,6 @@ package Cliente;
 import java.io.IOException;
 import java.util.Scanner;
 
-import Gestor.GestorViajes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -61,12 +60,12 @@ public class ClienteViajes {
             do {
                 opcion = menu(teclado);
                 switch (opcion) {
+
                     case 0 -> { // Guardar los datos en el fichero y salir del programa
 
                         auxiliarClienteViajes.cierraSesion();
                         System.out.println("Se ha guardado los datos correctamente.");
                     }
-
 
                     case 1 -> { // Consultar viajes con un origen dado
 
@@ -82,6 +81,7 @@ public class ClienteViajes {
                         }
 
                     }
+
                     case 2 -> { // Reservar un viaje
 
                         System.out.print("Introduzca el codigo del viaje a reservar: ");
@@ -97,6 +97,7 @@ public class ClienteViajes {
                         }
 
                     }
+
                     case 3 -> { // Anular una reserva
 
                         System.out.println("Introduzca el código del viaje a cancelar");
@@ -112,6 +113,7 @@ public class ClienteViajes {
                         }
 
                     }
+
                     case 4 -> { // Ofertar un viaje
                         System.out.println("A continuación escriba en el siguiente formato los datos del viaje:");
                         System.out.println("origen,destino,fecha,precio,numplazas");
@@ -120,6 +122,7 @@ public class ClienteViajes {
 
                         JSONObject viajeNuevo = auxiliarClienteViajes.ofertaViaje(codcli, (String) vector[0], (String) vector[1],
                                 (String) vector[2], Long.parseLong((String) vector[3]), Long.parseLong((String) vector[4]));
+
                         if (viajeNuevo.isEmpty()) {
                             System.out.println("Lo sentimos, ese viaje no es valido");
                         } else {
@@ -128,6 +131,7 @@ public class ClienteViajes {
                         }
 
                     }
+
                     case 5 -> { // Borrar un viaje ofertado
 
                         System.out.println("Introduce el código del viaje:");
@@ -141,10 +145,8 @@ public class ClienteViajes {
                             System.out.println("Se ha borrado el viaje con la siguiente información:");
                             System.out.println(viajeBorrado.toJSONString());
                         }
-
                     }
                 } // fin switch
-
             } while (opcion != 0);
         }catch (Exception e){e.printStackTrace();}
     } // fin main

@@ -53,13 +53,11 @@ public class AuxiliarClienteViajes {
 		peticion.put("origen",origen);
 
 		mySocket.sendMessage(peticion.toJSONString());
-
 		String respuesta = mySocket.receiveMessage();
 
-		JSONArray jsonArray = null;
 		JSONParser jsonParser = new JSONParser();
 		Object object = jsonParser.parse(respuesta);
-		jsonArray = (JSONArray) object;
+		JSONArray jsonArray = (JSONArray) object;
 
 		return jsonArray;
 	} // end consultaViajes
@@ -78,7 +76,6 @@ public class AuxiliarClienteViajes {
 		peticion.put("codcli",codcliente);
 
 		mySocket.sendMessage(peticion.toJSONString());
-
 		String respuesta =  mySocket.receiveMessage();
 
 		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
@@ -101,7 +98,6 @@ public class AuxiliarClienteViajes {
 		peticion.put("codcli",codcliente);
 
 		mySocket.sendMessage(peticion.toJSONString());
-
 		String respuesta =  mySocket.receiveMessage();
 
 		JSONObject jsonObject = (JSONObject) new JSONParser().parse(respuesta);
@@ -169,6 +165,7 @@ public class AuxiliarClienteViajes {
 
 		mySocket.sendMessage(peticion.toJSONString());
 		String respuesta =  mySocket.receiveMessage();
+		mySocket.close();
 
 	} // end done
 } //end class
