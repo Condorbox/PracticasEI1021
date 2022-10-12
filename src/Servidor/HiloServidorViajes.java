@@ -1,14 +1,13 @@
 package Servidor;
 
-import java.io.IOException;
-import java.net.SocketException;
-
 import Comun.MyStreamSocket;
 import Gestor.GestorViajes;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import java.io.IOException;
+import java.net.SocketException;
 
 /**
  * Clase ejecutada por cada hebra encargada de servir a un cliente del servicio de viajes.
@@ -36,7 +35,7 @@ class HiloServidorViajes implements Runnable {
 	 * Gestiona una sesion con un cliente	
 	 */
 	public void run( ) {
-		String operacion = "0";
+		String operacion;
 		boolean done = false;
 		try {
 			while (!done) {
@@ -45,38 +44,22 @@ class HiloServidorViajes implements Runnable {
 				String res = "";
 				operacion = (String) campos.get("operacion");
 				switch (operacion) {
-					case "0":
+					case "0" -> {
 						gestor.guardaDatos();
 						done = true;
-						break;
-
-					case "1": { // Consulta los viajes con un origen dado
-						res = gestor.consultaViajes((String) campos.get("origen")).toJSONString();
-
-						break;
 					}
-					case "2": { // Reserva una plaza en un viaje
-						res = gestor.reservaViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
-
-						break;
-					}
-					case "3": { // Anular una reserva
-						res = gestor.anulaReserva((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
-
-						break;
-					}
-					case "4": { // Oferta un viaje
-						//String codcli, String origen, String destino, String fecha, long precio, long numplazas
-						res = gestor.ofertaViaje((String) campos.get("codprop"), (String) campos.get("origen"), (String) campos.get("destino"),
-								(String) campos.get("fecha"), (long) campos.get("precio"), (long) campos.get("numplazas")).toJSONString();
-
-						break;
-					}
-					case "5": { // Borra un viaje
-						res = gestor.borraViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
-
-						break;
-					}
+					case "1" -> // Consulta los viajes con un origen dado
+							res = gestor.consultaViajes((String) campos.get("origen")).toJSONString();
+					case "2" -> // Reserva una plaza en un viaje
+							res = gestor.reservaViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
+					case "3" -> // Anular una reserva
+							res = gestor.anulaReserva((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
+					case "4" -> // Oferta un viaje
+								//String codcli, String origen, String destino, String fecha, long precio, long numplazas
+							res = gestor.ofertaViaje((String) campos.get("codprop"), (String) campos.get("origen"), (String) campos.get("destino"),
+									(String) campos.get("fecha"), (long) campos.get("precio"), (long) campos.get("numplazas")).toJSONString();
+					case "5" -> // Borra un viaje
+							res = gestor.borraViaje((String) campos.get("codviaje"), (String) campos.get("codcli")).toJSONString();
 				} // fin switch
 				if (operacion.equals("0")){
 					myDataSocket.close();
