@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class ImplServidorViajes extends UnicastRemoteObject implements IntServidorViajes {
@@ -42,7 +43,10 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
 
     @Override
     public synchronized JSONObject ofertaViaje(String codcli, String origen, String destino, String fecha, long precio, long numplazas) throws RemoteException {
-        return gestorViajes.ofertaViaje(codcli, origen, destino, fecha, precio, numplazas);
+        JSONObject nuevoViaje = gestorViajes.ofertaViaje(codcli, origen, destino, fecha, precio, numplazas);
+        if (!nuevoViaje.isEmpty())
+            notificar(origen);
+        return nuevoViaje;
     }
 
     @Override
@@ -71,6 +75,23 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
         List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen);
         if (clientsForCallback != null) {
             clientsForCallback.remove(cliente);
+        }
+    }
+
+    private void notificar(String origen) {
+        String message = "Se ha creado un nuevo viaje con destino a " + origen;
+        List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen.toLowerCase());
+        if (clientsForCallback != null) {
+            Iterator<IntCallbackCliente> it = clientsForCallback.listIterator();
+            while (it.hasNext()){
+                IntCallbackCliente client = it.next();
+                try {
+                    client.notificame(message);
+                }catch (RemoteException e){
+                    clientsForCallback.remove(client);
+                }
+
+            }
         }
     }
 }

@@ -10,11 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class ClienteViajesRMI extends UnicastRemoteObject implements IntCallbackCliente {
-    protected ClienteViajesRMI() throws RemoteException {
-        super();
-    }
-
+public class ClienteViajesRMI {
     /**
      * Muestra el menu de opciones y lee repetidamente de teclado hasta obtener una opcion valida
      * @param teclado	stream para leer la opción elegida de teclado
@@ -32,10 +28,12 @@ public class ClienteViajesRMI extends UnicastRemoteObject implements IntCallback
         System.out.println("3. Anular una reserva");
         System.out.println("4. Ofertar un viaje");
         System.out.println("5. Borrar un viaje");
+        System.out.println("6. Subscribirse a un origen");
+        System.out.println("7. Eliminarse de un origen");
         do {
-            System.out.print("\nElige una opcion (0..5): ");
+            System.out.print("\nElige una opcion (0..7): ");
             opcion = teclado.nextInt();
-        } while ( (opcion<0) || (opcion>5) );
+        } while ( (opcion<0) || (opcion>7) );
         teclado.nextLine(); // Elimina retorno de carro del buffer de entrada
         return opcion;
     }
@@ -54,6 +52,8 @@ public class ClienteViajesRMI extends UnicastRemoteObject implements IntCallback
 
             IntServidorViajes servidorViajes = (IntServidorViajes) Naming.lookup(registryURL);
             System.out.println("Lookup completed ");
+
+            IntCallbackCliente callbackCliente = new ImplCallbackCliente();
 
             Scanner teclado = new Scanner(System.in);
 
@@ -149,15 +149,24 @@ public class ClienteViajesRMI extends UnicastRemoteObject implements IntCallback
                             System.out.println(viajeBorrado.toJSONString());
                         }
                     }
+
+                    case 6 -> { // Subscribirse
+                        System.out.println("Introduce el origen donde deseas registrarte: ");
+                        String origen = teclado.next();
+                        servidorViajes.registerForCallback(callbackCliente, origen);
+                        System.out.println("\nResgistrado en " + origen);
+                    }
+
+                    case 7 -> { // Eliminarse
+                        System.out.println("Introduce el origen donde deseas eliminarte: ");
+                        String origen = teclado.next();
+                        servidorViajes.unregisterForCallback(callbackCliente, origen);
+                        System.out.println("\nEliminado en " + origen);
+                    }
                 } // fin switch
             } while (opcion != 0);
         }catch (Exception e){
             System.out.println("Exception in client: " + e);
         }
-    }
-
-    @Override
-    public void notificame(String message) throws RemoteException {
-        System.out.println(message);
     }
 }
