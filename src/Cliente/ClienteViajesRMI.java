@@ -1,18 +1,19 @@
 package Cliente;
 
+import Comun.IntCallbackCliente;
 import Comun.IntServidorViajes;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.IOException;
 import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
-public class ClienteViajesRMI {
-    // Modifícala para que instancie un objeto de la clase AuxiliarClienteViajes
-    // Modifica todas las llamadas al objeto de la clase GestorViajes
-    // por llamadas al objeto de la clase AuxiliarClienteViajes.
-    // Los métodos a llamar tendrán la misma signatura.
+public class ClienteViajesRMI extends UnicastRemoteObject implements IntCallbackCliente {
+    protected ClienteViajesRMI() throws RemoteException {
+        super();
+    }
 
     /**
      * Muestra el menu de opciones y lee repetidamente de teclado hasta obtener una opcion valida
@@ -153,5 +154,10 @@ public class ClienteViajesRMI {
         }catch (Exception e){
             System.out.println("Exception in client: " + e);
         }
+    }
+
+    @Override
+    public void notificame(String message) throws RemoteException {
+        System.out.println(message);
     }
 }

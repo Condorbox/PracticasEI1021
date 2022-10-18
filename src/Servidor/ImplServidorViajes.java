@@ -1,6 +1,6 @@
 package Servidor;
 
-import Cliente.IntCallbackCliente;
+import Comun.IntCallbackCliente;
 import Comun.IntServidorViajes;
 import Gestor.GestorViajes;
 import org.json.simple.JSONArray;

@@ -1,7 +1,5 @@
 package Comun;
 
-import Cliente.IntCallbackCliente;
-import Gestor.Viaje;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
