@@ -20,7 +20,7 @@ public class ServidorViajesRMI {
             System.out.println("Server registered. Registry contains:");
             // list names currently in the registry
             listRegistry(registryURL);
-            System.out.println("Hello Server ready.");
+            System.out.println("Viajes Server ready.");
         }// end try
 
         catch (Exception re) {
