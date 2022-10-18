@@ -16,7 +16,6 @@ import java.net.SocketException;
 
 class HiloServidorViajes implements Runnable {
 
-
 	private MyStreamSocket myDataSocket;
 	private GestorViajes gestor;
 
