@@ -55,7 +55,7 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
     }
 
     @Override
-    public void registerForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
+    public synchronized void registerForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
         origen = origen.toLowerCase();
         if (!subscriptions.containsKey(origen)){
             List<IntCallbackCliente> clientsForCallback = new ArrayList<>();
@@ -70,7 +70,7 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
     }
 
     @Override
-    public void unregisterForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
+    public synchronized void unregisterForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
         origen = origen.toLowerCase();
         List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen);
         if (clientsForCallback != null) {
@@ -78,16 +78,14 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
         }
     }
 
-    private void notificar(String origen) {
+    private synchronized void notificar(String origen) throws RemoteException {
         String message = "Se ha creado un nuevo viaje con destino a " + origen;
         List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen.toLowerCase());
         if (clientsForCallback != null) {
-            Iterator<IntCallbackCliente> it = clientsForCallback.listIterator();
-            while (it.hasNext()){
-                IntCallbackCliente client = it.next();
+            for (IntCallbackCliente client : clientsForCallback) {
                 try {
                     client.notificame(message);
-                }catch (RemoteException e){
+                } catch (RemoteException e) {
                     clientsForCallback.remove(client);
                 }
 
