@@ -157,7 +157,7 @@ public class ClienteViajesRMI {
                         if (added) {
                             System.out.println("\nResgistrado en " + origen);
                         } else {
-                            System.out.println("\nError al registrar en " + origen);
+                            System.out.println("\nYa estas registrado en " + origen);
                         }
                     }
 

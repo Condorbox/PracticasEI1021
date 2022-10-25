@@ -65,7 +65,9 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
             List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen);
             if (!clientsForCallback.contains(cliente)) {
                 clientsForCallback.add(cliente);
+                return true;
             }
+            return false;
         }
         return true;
     }
