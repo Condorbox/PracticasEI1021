@@ -7,7 +7,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 public class ServidorViajesRMI {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             System.out.println("By default, the RMIregistry port number is 1099.");
             int RMIPortNum = 1099;

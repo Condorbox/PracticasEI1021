@@ -95,7 +95,6 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
                 } catch (RemoteException e) {
                     it.remove();
                 }
-
             }
         }
     }
