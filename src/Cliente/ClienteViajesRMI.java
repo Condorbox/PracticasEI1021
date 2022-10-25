@@ -153,15 +153,24 @@ public class ClienteViajesRMI {
                     case 6 -> { // Subscribirse
                         System.out.println("Introduce el origen donde deseas registrarte: ");
                         String origen = teclado.next();
-                        servidorViajes.registerForCallback(callbackCliente, origen);
-                        System.out.println("\nResgistrado en " + origen);
+                        boolean added = servidorViajes.registerForCallback(callbackCliente, origen);
+                        if (added) {
+                            System.out.println("\nResgistrado en " + origen);
+                        } else {
+                            System.out.println("\nError al registrar en " + origen);
+                        }
                     }
 
                     case 7 -> { // Eliminarse
                         System.out.println("Introduce el origen donde deseas eliminarte: ");
                         String origen = teclado.next();
-                        servidorViajes.unregisterForCallback(callbackCliente, origen);
-                        System.out.println("\nEliminado en " + origen);
+                        boolean removed = servidorViajes.unregisterForCallback(callbackCliente, origen);
+                        if (removed) {
+                            System.out.println("\nEliminado en " + origen);
+                        } else {
+                            System.out.println("\nNo estas registrado en " + origen);
+                        }
+
                     }
                 } // fin switch
             } while (opcion != 0);

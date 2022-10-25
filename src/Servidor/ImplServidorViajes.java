@@ -55,7 +55,7 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
     }
 
     @Override
-    public synchronized void registerForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
+    public synchronized boolean registerForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
         origen = origen.toLowerCase();
         if (!subscriptions.containsKey(origen)){
             List<IntCallbackCliente> clientsForCallback = new ArrayList<>();
@@ -67,15 +67,18 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
                 clientsForCallback.add(cliente);
             }
         }
+        return true;
     }
 
     @Override
-    public synchronized void unregisterForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
+    public synchronized boolean unregisterForCallback(IntCallbackCliente cliente, String origen) throws RemoteException {
         origen = origen.toLowerCase();
         List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen);
         if (clientsForCallback != null) {
             clientsForCallback.remove(cliente);
+            return true;
         }
+        return false;
     }
 
     private synchronized void notificar(String origen) throws RemoteException {
