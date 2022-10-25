@@ -12,6 +12,6 @@ public class ImplCallbackCliente extends UnicastRemoteObject  implements IntCall
 
     @Override
     public void notificame(String message) throws RemoteException {
-        System.out.println(message);
+        System.out.println("\n"+ message);
     }
 }
