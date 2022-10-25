@@ -82,11 +82,13 @@ public class ImplServidorViajes extends UnicastRemoteObject implements IntServid
         String message = "Se ha creado un nuevo viaje con destino a " + origen;
         List<IntCallbackCliente> clientsForCallback = subscriptions.get(origen.toLowerCase());
         if (clientsForCallback != null) {
-            for (IntCallbackCliente client : clientsForCallback) {
+            Iterator<IntCallbackCliente> it = clientsForCallback.listIterator();
+            while (it.hasNext()){
+                IntCallbackCliente client = it.next();
                 try {
                     client.notificame(message);
                 } catch (RemoteException e) {
-                    clientsForCallback.remove(client);
+                    it.remove();
                 }
 
             }
