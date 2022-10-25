@@ -177,5 +177,6 @@ public class ClienteViajesRMI {
         }catch (Exception e){
             System.out.println("Exception in client: " + e);
         }
+        System.exit(0);
     }
 }
